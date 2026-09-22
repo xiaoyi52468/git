@@ -7,3 +7,6 @@ _shots/
 # 系统文件
 Thumbs.db
 .DS_Store
+
+# 环境变量（密钥等敏感配置）
+.env
