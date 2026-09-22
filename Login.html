@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录 - bilibili 风格登录界面</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23FB7299'/%3E%3Ctext x='32' y='46' font-size='40' text-anchor='middle' fill='white' font-family='Arial'%3Eb%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+
+  <!-- ===== 顶部导航栏（背景层） ===== -->
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="javascript:void(0)" data-action="nav">bilibili</a>
+      <nav class="nav-links">
+        <a href="javascript:void(0)" data-action="nav">首页</a>
+        <a href="javascript:void(0)" data-action="nav">纪录片</a>
+        <a href="javascript:void(0)" data-action="nav">游戏</a>
+        <a href="javascript:void(0)" data-action="nav">音乐</a>
+        <a href="javascript:void(0)" data-action="nav">影视</a>
+        <a href="javascript:void(0)" data-action="nav">知识</a>
+        <a href="javascript:void(0)" data-action="nav">资讯</a>
+        <a href="javascript:void(0)" data-action="nav">小剧场</a>
+        <a href="javascript:void(0)" data-action="nav">时尚美妆</a>
+        <a class="nav-more" href="javascript:void(0)" data-action="nav">更多</a>
+      </nav>
+      <div class="nav-right">
+        <button type="button" class="nav-search" data-action="search">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+          </svg>
+          <span>搜索</span>
+        </button>
+        <span class="nav-avatar" data-action="avatar"></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== 页面背景装饰层 ===== -->
+  <main class="page-bg">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="deco deco-3"></div>
+    <div class="deco deco-4"></div>
+  </main>
+
+  <!-- ===== 轻提示 ===== -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- ===== 登录弹窗 ===== -->
+  <div class="login-modal" id="loginModal" role="dialog" aria-modal="true" aria-label="登录">
+    <button type="button" class="modal-close" id="modalClose" aria-label="关闭">×</button>
+
+    <!-- 左侧：扫码区 -->
+    <div class="qr-panel">
+      <h3 class="qr-title">扫描二维码登录</h3>
+      <div class="qr-wrap" id="qrWrap">
+        <canvas id="qrCanvas" width="250" height="250"></canvas>
+        <div class="qr-mask" id="qrMask">
+          <p>二维码已失效</p>
+          <button type="button" id="qrRefresh">点击刷新</button>
+        </div>
+      </div>
+      <p class="qr-tip">请使用哔哩哔哩客户端<br>扫码登录或扫码下载APP</p>
+      <img class="mascot mascot-left" src="assets/girl-left.png" alt="装饰插画">
+    </div>
+
+    <!-- 右侧：表单区 -->
+    <div class="form-panel">
+      <div class="tabs">
+        <button type="button" class="tab active" data-tab="pwd">密码登录</button>
+        <button type="button" class="tab" data-tab="sms">短信登录</button>
+      </div>
+
+      <!-- 密码登录 -->
+      <form id="pwdForm" class="tab-pane active" novalidate>
+        <div class="field">
+          <label for="pwdAccount">账号</label>
+          <input type="text" id="pwdAccount" placeholder="请输入账号" autocomplete="username">
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="pwdPassword">密码</label>
+          <input type="password" id="pwdPassword" placeholder="请输入密码" autocomplete="current-password">
+          <a class="forgot" href="javascript:void(0)" data-action="forgot">忘记密码?</a>
+          <span class="field-error"></span>
+        </div>
+        <div class="form-actions">
+          <a class="link-register" href="javascript:void(0)" data-action="register">注册</a>
+          <button type="submit" class="btn-login">登录</button>
+        </div>
+      </form>
+
+      <!-- 短信登录 -->
+      <form id="smsForm" class="tab-pane" novalidate>
+        <div class="field">
+          <label for="smsPhone">手机号</label>
+          <input type="tel" id="smsPhone" placeholder="请输入手机号" autocomplete="tel" maxlength="11">
+          <span class="field-error"></span>
+        </div>
+        <div class="field">
+          <label for="smsCode">验证码</label>
+          <input type="text" id="smsCode" placeholder="请输入验证码" maxlength="6">
+          <button type="button" class="btn-code" id="btnCode">获取验证码</button>
+          <span class="field-error"></span>
+        </div>
+        <div class="form-actions">
+          <a class="link-register" href="javascript:void(0)" data-action="register">注册</a>
+          <button type="submit" class="btn-login">登录</button>
+        </div>
+      </form>
+
+      <div class="divider"><span>其他方式登录</span></div>
+
+      <div class="third-party">
+        <a class="tp tp-wechat" href="javascript:void(0)" data-action="wechat">
+          <i class="tp-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><text x="12" y="16.5" text-anchor="middle" font-size="11" fill="#fff">微</text></svg>
+          </i>
+          <span>微信登录</span>
+        </a>
+        <a class="tp tp-weibo" href="javascript:void(0)" data-action="weibo">
+          <i class="tp-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><text x="12" y="16.5" text-anchor="middle" font-size="11" fill="#fff">博</text></svg>
+          </i>
+          <span>微博登录</span>
+        </a>
+        <a class="tp tp-qq" href="javascript:void(0)" data-action="qq">
+          <i class="tp-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><text x="12" y="16.5" text-anchor="middle" font-size="12" fill="#fff">Q</text></svg>
+          </i>
+          <span>QQ登录</span>
+        </a>
+      </div>
+
+      <p class="auto-register">未注册过哔哩哔哩的手机号，我们将自动帮你注册账号</p>
+      <p class="agreement">登录或完成注册即代表你同意 <a href="javascript:void(0)" data-action="terms">用户协议</a> 和 <a href="javascript:void(0)" data-action="privacy">隐私政策</a></p>
+
+      <img class="mascot mascot-right" src="assets/girl-right.png" alt="装饰插画">
+    </div>
+  </div>
+
+  <!-- ===== 关闭后重新打开 ===== -->
+  <button type="button" class="btn-reopen" id="btnReopen" hidden>重新打开登录</button>
+
+  <script src="js/login.js"></script>
+</body>
+
+</html>

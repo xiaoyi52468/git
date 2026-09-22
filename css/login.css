@@ -1,0 +1,737 @@
+/* ============================================================
+   bilibili 风格登录界面 — 样式文件
+   ============================================================ */
+
+/* ---------- 基础重置 ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --pink: #fb7299;
+  --pink-dark: #f25d87;
+  --pink-light: #ffe6ee;
+  --text-main: #18191c;
+  --text-sub: #61666d;
+  --text-muted: #9499a0;
+  --line: #e3e5e7;
+  --bg-panel: #f7f8fa;
+  --danger: #f24957;
+  --success: #00b96b;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Helvetica Neue", Arial, sans-serif;
+  color: var(--text-main);
+  background: linear-gradient(150deg, #fff5f8 0%, #f3f6ff 55%, #eef6ff 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ============================================================
+   顶部导航栏（背景层）
+   ============================================================ */
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.nav-inner {
+  max-width: 1280px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav-logo {
+  font-size: 26px;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: -1px;
+  color: var(--pink);
+  user-select: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.nav-links a {
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--text-sub);
+  border-radius: 6px;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--pink);
+  background-color: var(--pink-light);
+}
+
+.nav-links .nav-more {
+  color: var(--text-muted);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+  color: var(--text-muted);
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.nav-search:hover {
+  border-color: var(--pink);
+  color: var(--pink);
+}
+
+.nav-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffd3e0, #fb7299);
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(251, 114, 153, 0.35);
+  cursor: pointer;
+}
+
+/* ============================================================
+   页面背景装饰层
+   ============================================================ */
+.page-bg {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.deco {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.deco-1 {
+  width: 380px;
+  height: 380px;
+  top: 18%;
+  left: 8%;
+  background: #ffd9e4;
+}
+
+.deco-2 {
+  width: 300px;
+  height: 300px;
+  top: 30%;
+  right: 10%;
+  background: #d5e2ff;
+}
+
+.deco-3 {
+  width: 240px;
+  height: 240px;
+  bottom: 12%;
+  left: 20%;
+  background: #ffe9b8;
+}
+
+.deco-4 {
+  width: 200px;
+  height: 200px;
+  bottom: 16%;
+  right: 24%;
+  background: #d8f7ea;
+}
+
+/* ============================================================
+   登录弹窗
+   ============================================================ */
+.login-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 30;
+  width: 860px;
+  min-height: 560px;
+  display: flex;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(24, 25, 28, 0.16);
+  overflow: hidden;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.login-modal.closing {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.96);
+}
+
+.login-modal.hidden-modal {
+  display: none;
+}
+
+/* 右上角关闭按钮 */
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 5;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  border-radius: 50%;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--text-muted);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.modal-close:hover {
+  background-color: var(--bg-panel);
+  color: var(--text-main);
+}
+
+/* ---------- 左侧：扫码区 ---------- */
+.qr-panel {
+  position: relative;
+  width: 360px;
+  flex-shrink: 0;
+  background: var(--bg-panel);
+  padding: 52px 40px 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qr-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 28px;
+}
+
+.qr-wrap {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(24, 25, 28, 0.06);
+}
+
+#qrCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 9px;
+}
+
+/* 二维码失效遮罩 */
+.qr-mask {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 9px;
+}
+
+.qr-mask.show {
+  display: flex;
+}
+
+.qr-mask p {
+  font-size: 14px;
+  color: var(--text-sub);
+}
+
+.qr-mask button {
+  padding: 6px 18px;
+  border: 1px solid var(--pink);
+  border-radius: 18px;
+  background: #fff;
+  color: var(--pink);
+  font-size: 13px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.qr-mask button:hover {
+  background: var(--pink);
+  color: #fff;
+}
+
+.qr-tip {
+  margin-top: 26px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--text-sub);
+}
+
+/* ---------- 右侧：表单区 ---------- */
+.form-panel {
+  position: relative;
+  flex: 1;
+  padding: 36px 48px 108px;
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.tab {
+  position: relative;
+  padding: 6px 2px 12px;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  color: var(--text-sub);
+  transition: color 0.2s;
+}
+
+.tab::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--pink);
+  transition: width 0.25s ease;
+}
+
+.tab:hover {
+  color: var(--pink);
+}
+
+.tab.active {
+  color: var(--pink);
+  font-weight: 600;
+}
+
+.tab.active::after {
+  width: 100%;
+}
+
+/* ---------- 表单项 ---------- */
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+.field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 52px;
+  margin-bottom: 26px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.field:focus-within {
+  border-color: var(--pink);
+  box-shadow: 0 0 0 3px rgba(251, 114, 153, 0.12);
+}
+
+.field label {
+  width: 62px;
+  flex-shrink: 0;
+  padding-left: 16px;
+  font-size: 14px;
+  color: var(--text-sub);
+  border-right: 1px solid var(--line);
+  height: 100%;
+  line-height: 52px;
+  user-select: none;
+}
+
+.field input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0 14px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: var(--text-main);
+}
+
+.field input::placeholder {
+  color: var(--text-muted);
+}
+
+/* 密码行右侧链接 / 验证码按钮 */
+.field .forgot {
+  flex-shrink: 0;
+  padding-right: 16px;
+  font-size: 13px;
+  color: var(--pink);
+  white-space: nowrap;
+}
+
+.field .btn-code {
+  flex-shrink: 0;
+  margin-right: 10px;
+  padding: 7px 14px;
+  border: 1px solid var(--pink);
+  border-radius: 18px;
+  background: #fff;
+  color: var(--pink);
+  font-size: 13px;
+  white-space: nowrap;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.field .btn-code:hover:not(:disabled) {
+  background: var(--pink);
+  color: #fff;
+}
+
+.field .btn-code:disabled {
+  border-color: var(--line);
+  color: var(--text-muted);
+  background: var(--bg-panel);
+  cursor: not-allowed;
+}
+
+/* 校验错误 */
+.field.error {
+  border-color: var(--danger);
+}
+
+.field.error:focus-within {
+  box-shadow: 0 0 0 3px rgba(242, 73, 87, 0.1);
+}
+
+.field-error {
+  position: absolute;
+  left: 78px;
+  bottom: -18px;
+  font-size: 12px;
+  color: var(--danger);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.field.error .field-error {
+  opacity: 1;
+}
+
+/* ---------- 表单底部按钮行 ---------- */
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 4px 0 22px;
+}
+
+.link-register {
+  font-size: 14px;
+  color: var(--text-sub);
+  transition: color 0.2s;
+}
+
+.link-register:hover {
+  color: var(--pink);
+}
+
+.btn-login {
+  width: 130px;
+  height: 42px;
+  border: none;
+  border-radius: 8px;
+  background: var(--pink);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-indent: 4px;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-login:hover {
+  background: var(--pink-dark);
+}
+
+.btn-login:active {
+  transform: scale(0.97);
+}
+
+/* ---------- 分隔线 ---------- */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 4px 0 18px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+/* ---------- 第三方登录 ---------- */
+.third-party {
+  display: flex;
+  justify-content: center;
+  gap: 44px;
+  margin-bottom: 20px;
+}
+
+.tp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+  transition: color 0.2s, transform 0.2s;
+}
+
+.tp:hover {
+  color: var(--text-sub);
+  transform: translateY(-2px);
+}
+
+.tp-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(24, 25, 28, 0.12);
+}
+
+.tp-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.tp-wechat .tp-icon {
+  background: #07c160;
+}
+
+.tp-weibo .tp-icon {
+  background: #e6162d;
+}
+
+.tp-qq .tp-icon {
+  background: #12b7f5;
+}
+
+/* ---------- 底部提示 ---------- */
+.auto-register {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-sub);
+  margin-bottom: 8px;
+}
+
+.agreement {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.agreement a {
+  color: var(--pink);
+}
+
+.agreement a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- 角落装饰插画 ---------- */
+.mascot {
+  position: absolute;
+  bottom: 2px;
+  width: 70px;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.mascot-left {
+  left: 14px;
+}
+
+.mascot-right {
+  right: 14px;
+}
+
+/* ============================================================
+   轻提示 Toast
+   ============================================================ */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 48px;
+  transform: translateX(-50%) translateY(20px);
+  z-index: 60;
+  max-width: 80vw;
+  padding: 11px 22px;
+  background: rgba(24, 25, 28, 0.88);
+  color: #fff;
+  font-size: 14px;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(24, 25, 28, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ============================================================
+   关闭后重新打开按钮
+   ============================================================ */
+.btn-reopen {
+  position: fixed;
+  left: 50%;
+  bottom: 48px;
+  transform: translateX(-50%);
+  z-index: 30;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 24px;
+  background: var(--pink);
+  color: #fff;
+  font-size: 14px;
+  box-shadow: 0 8px 24px rgba(251, 114, 153, 0.4);
+  transition: background-color 0.2s;
+}
+
+.btn-reopen:hover {
+  background: var(--pink-dark);
+}
+
+/* ============================================================
+   响应式
+   ============================================================ */
+@media (max-width: 900px) {
+  .login-modal {
+    width: 94vw;
+  }
+
+  .qr-panel {
+    width: 320px;
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+}
+
+@media (max-width: 700px) {
+  .site-nav {
+    height: 56px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .login-modal {
+    width: 92vw;
+    min-height: 0;
+    flex-direction: column;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .qr-panel {
+    width: 100%;
+    padding: 32px 24px 70px;
+  }
+
+  .qr-title {
+    margin-bottom: 20px;
+  }
+
+  .qr-wrap {
+    width: 200px;
+    height: 200px;
+  }
+
+  .form-panel {
+    padding: 28px 24px 80px;
+  }
+
+  .mascot {
+    width: 56px;
+  }
+
+  .third-party {
+    gap: 32px;
+  }
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>shuben</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .shuben {
+      position: relative;
+      width: 240px;
+      height: 280px;
+      margin: 50px;
+    }
+
+    .shuben div {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 280px;
+      width: 240px;
+      border-radius: 0 30px 40px 40px;
+      background-color: pink;
+      transition: all 0.5s;
+      transform-origin: top left;
+    }
+
+    .shuben .box1 {
+      background-color: navajowhite;
+      z-index: 1;
+    }
+
+    .shuben .box2 {
+      background-color: blue;
+      transform: skewY(12deg);
+      transform-origin: top left;
+    }
+
+    .shuben .box1:hover {
+      transform: skewY(-3deg);
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="shuben">
+    <div class="box1">
+
+    </div>
+    <div class="box2">
+
+    </div>
+  </div>
+
+</body>
+
+</html>

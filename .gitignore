@@ -1,0 +1,9 @@
+# 编辑器配置
+.vscode/
+
+# 页面截图（中间产物）
+_shots/
+
+# 系统文件
+Thumbs.db
+.DS_Store
